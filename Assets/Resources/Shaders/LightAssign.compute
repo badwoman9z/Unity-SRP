@@ -1,0 +1,86 @@
+#pragma kernel LightAssign
+
+#include "UnityCG.cginc"
+
+struct ClusterBox
+{
+    float3 p0, p1, p2, p3, p4, p5, p6, p7;
+};
+
+struct PointLight
+{
+    float3 color;
+    float intensity;
+    float3 position;
+    float radius;
+};
+
+struct LightIndex
+{
+    int count;
+    int start;
+};
+
+RWStructuredBuffer<ClusterBox> _clusterBuffer;
+RWStructuredBuffer<PointLight> _lightBuffer;
+RWStructuredBuffer<uint> _lightAssignBuffer;
+RWStructuredBuffer<LightIndex> _assignTable;
+
+float _numClusterX;
+float _numClusterY;
+float _numClusterZ;
+int _numLights;
+int _maxNumLightsPerCluster;
+
+uint Index3DTo1D(uint3 i)
+{
+    return i.z * _numClusterX * _numClusterY
+        + i.y * _numClusterX
+        + i.x;
+}
+
+bool PointSphereIntersect(float3 p, float4 shpere)
+{
+    return distance(p, shpere.xyz) < shpere.w;
+}
+
+bool ClusterLightIntersect(ClusterBox box, PointLight lit)
+{
+    float4 shpere = float4(lit.position, lit.radius);
+    return PointSphereIntersect(box.p0, shpere) 
+        || PointSphereIntersect(box.p1, shpere)
+        || PointSphereIntersect(box.p2, shpere)
+        || PointSphereIntersect(box.p3, shpere)
+        || PointSphereIntersect(box.p4, shpere)
+        || PointSphereIntersect(box.p5, shpere)
+        || PointSphereIntersect(box.p6, shpere)
+        || PointSphereIntersect(box.p7, shpere);
+}
+
+[numthreads(16,16,1)]
+void LightAssign (
+    uint3 gtid : SV_GroupThreadID, 
+    uint3 gid : SV_GroupID)
+{
+   int i = gtid.x,j = gtid.y,k = gid.x;
+   uint3 index = uint3(i,j,k);
+
+   int clusterId = Index3DTo1D(index);
+
+   ClusterBox clbox = _clusterBuffer[clusterId];
+   int start = clusterId*_maxNumLightsPerCluster;
+   int end = start;
+
+   for(int i=0;i<_numLights;i++){
+        PointLight p  = _lightBuffer[i];
+        if(ClusterLightIntersect(clbox,p)){
+            _lightAssignBuffer[end++] = i;
+        }
+   
+   }
+   LightIndex idx ;
+   idx.count = end-start;
+   idx.start = start;
+   _assignTable[clusterId]  = idx;
+
+}

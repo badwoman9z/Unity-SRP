@@ -1,0 +1,59 @@
+#pragma kernel CSMain
+
+#include "UnityCG.cginc"
+
+int _instanceCount;
+int _size;
+float4 _planes[6];
+float4 _bounds[8];
+
+float4x4 _vpMatrix;
+Texture2D _hizBuffer;
+
+RWStructuredBuffer<float4x4> _matrixBuffer; 
+AppendStructuredBuffer<float4x4> _validMatrixBuffer; 
+RWStructuredBuffer<uint> _argsBuffer; 
+int GetSide(float4 plane, float3 p)
+{
+    return (dot(plane.xyz, p) + plane.w > 0) ? 1 : 0;
+}
+
+int IsInside(float4 _planes[6], float3 p)
+{
+    int cnt = 0;
+    for (int i = 0; i < 6; i++)
+        cnt += GetSide(_planes[i], p);
+    return cnt == 6 ? 1 : 0;
+}
+
+bool Visibility(float4 _planes[6], float4 _bounds[8])
+{
+    int cnt = 0;
+    for (int i = 0; i < 8; i++)
+        cnt += IsInside(_planes, _bounds[i]);
+    return cnt > 0;
+}
+
+
+[numthreads(128, 1, 1)]
+void CSMain(uint3 gid : SV_GroupID, uint3 gtid : SV_GroupThreadID)
+{
+    uint index = gid.x * 128 + gtid.x;
+    if (index >= (uint) _instanceCount)
+        return;
+
+    float4x4 ObjectToWorld = _matrixBuffer[index];
+
+
+    float4 worldBounds[8];
+    for (int i = 0; i < 8; i++)
+        worldBounds[i] = mul(ObjectToWorld, _bounds[i]);
+    
+    bool vis = Visibility(_planes, worldBounds);
+    if (!vis)
+        return;
+
+
+    _validMatrixBuffer.Append(ObjectToWorld); 
+    InterlockedAdd(_argsBuffer[1], 1);
+}

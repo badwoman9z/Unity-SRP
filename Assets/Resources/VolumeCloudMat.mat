@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VolumeCloudMat
+  m_Shader: {fileID: 4800000, guid: 5e8085e65f70db1418cb888d46bb7cb9, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail3D:
+        m_Texture: {fileID: 11700000, guid: 30cc76a506532824e99cff63fa934836, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise3D:
+        m_Texture: {fileID: 11700000, guid: 641e96870a40d02479123ff0e2133f6e, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WeatherTex:
+        m_Texture: {fileID: 2800000, guid: 03a02a1022befb64e91c351e2981c73c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _CloudFeather: 0.2
+    - _Cloud_coverage: 0
+    - _CumulusFeather: 0.109
+    - _Cutoff: 0.5
+    - _DensityMultiplier: 1.98
+    - _DensityThreshold: 0.186
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _LightAbsorptionTowardCloud: 0.251
+    - _LightAbsorptionTowardSun: 0.035
+    - _Metallic: 0
+    - _Mode: 0
+    - _NumSteps: 36
+    - _NumStepsLight: 8.2
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _Shape_Scale: 10.8
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Step_Length: 5
+    - _Steps: 12.4
+    - _Steps_Num: 32
+    - _StratusFeather: 0.056
+    - _UVSec: 0
+    - _ZWrite: 1
+    - _colorOffset1: 0.86
+    - _colorOffset2: 0.82
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorA: {r: 1, g: 0.34901962, b: 0, a: 1}
+    - _ColorB: {r: 0.3764706, g: 0.4745098, b: 0.5568628, a: 1}
+    - _CumulusRange: {r: 0.2, g: 0.7, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _StratusRange: {r: 0.31, g: 0.28, b: 0, a: 1}
+    - _phaseParams: {r: 0.78, g: 0.25, b: 0.29, a: 0.6}
+  m_BuildTextureStacks: []
